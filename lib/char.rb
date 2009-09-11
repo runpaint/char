@@ -166,6 +166,10 @@ class Char < String
     posix_class?(:print)
   end
 
+  def to_r
+    has_data? ? unicode_data.numeric_value : 0.to_r
+  end
+
   def properties
     self.class.instance_methods(false).select{|m| m.to_s.end_with?('?')}.
                                        select{|m| send(m) rescue false }
