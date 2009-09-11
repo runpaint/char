@@ -178,6 +178,11 @@ class Char < String
     to_r.to_i
   end
 
+  # TODO: Test against DerivedNumericType.txt
+  def numeric?
+    property?(:N)
+  end
+
   def properties
     self.class.instance_methods(false).select{|m| m.to_s.end_with?('?')}.
                                        select{|m| send(m) rescue false }
