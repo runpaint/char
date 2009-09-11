@@ -174,6 +174,10 @@ class Char < String
     to_r.to_f
   end
 
+  def to_i
+    to_r.to_i
+  end
+
   def properties
     self.class.instance_methods(false).select{|m| m.to_s.end_with?('?')}.
                                        select{|m| send(m) rescue false }
