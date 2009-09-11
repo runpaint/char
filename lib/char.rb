@@ -167,6 +167,10 @@ class Char < String
   end
 
   def to_r
+    # FIXME: We special-case U+4E00 because it's mentioned in UnicodeData.txt 
+    # yet not defined as Numeric there. We can remove this workaround when 
+    # we parse Unihan.txt
+    return Rational(1.0) if ord == 19968
     has_data? ? unicode_data.numeric_value : 0.to_r
   end
 
@@ -178,14 +182,22 @@ class Char < String
     to_r.to_i
   end
 
-  # TODO: Test against DerivedNumericType.txt
   def numeric?
-    property?(:N)
+    # FIXME: We special-case U+4E00 because it's mentioned in UnicodeData.txt 
+    # yet not defined as Numeric there. We can remove this workaround when 
+    # we parse Unihan.txt
+    ord == 19968 || property?(:N)
   end
 
   def properties
     self.class.instance_methods(false).select{|m| m.to_s.end_with?('?')}.
                                        select{|m| send(m) rescue false }
+  end
+
+  # Returns true if we have data for this character, i.e. if it appears in
+  # UnicodeData.txt. This currently returns false for Unihan characters.
+  def exists?
+    has_data?
   end
 
   def name
