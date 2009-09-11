@@ -171,11 +171,30 @@ class Char < String
                                        select{|m| send(m) rescue false }
   end
 
+  def name
+    has_data? ? unicode_data.name : ''
+  end
+
+  def name?(str)
+    return false unless has_data?
+    [str, name].map{|n| n.downcase.gsub(/[_ ]/,'')}.uniq.size == 1
+  end
+
   def property?(cat)
     !!match(/^\p{#{cat.capitalize}}$/u)
   end
 
   def posix_class?(cls)
     !!match(/^[[:#{cls.downcase}:]]$/u)
+  end
+
+  private
+  def has_data?
+    !!unicode_data rescue false
+  end
+
+  def unicode_data
+    require 'unicode-data'
+    @data ||= UnicodeData.codepoint(ord)
   end
 end

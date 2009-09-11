@@ -6,10 +6,10 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = "char"
     gem.summary = %Q{Char class for Ruby}
-    gem.description = %Q{TODO: longer description of your gem}
     gem.email = "runrun@runpaint.org"
     gem.homepage = "http://github.com/runpaint/char"
     gem.authors = ["Run Paint Run Run"]
+    gem.add_runtime_dependency "unicode-data"
     gem.add_development_dependency "rspec"
     gem.add_development_dependency "yard"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
