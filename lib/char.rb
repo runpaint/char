@@ -170,6 +170,10 @@ class Char < String
     has_data? ? unicode_data.numeric_value : 0.to_r
   end
 
+  def to_f
+    to_r.to_f
+  end
+
   def properties
     self.class.instance_methods(false).select{|m| m.to_s.end_with?('?')}.
                                        select{|m| send(m) rescue false }
