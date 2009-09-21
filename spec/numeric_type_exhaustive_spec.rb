@@ -49,3 +49,30 @@ describe Char, :numeric? do
   end
 end
 
+describe Char, :digit? do
+  derived_numeric_types['Digit'].each do |char|
+    it "returns true for digit character #{char.chr}  (#{char.ord})" do
+      char.should be_digit
+    end
+  end
+
+  derived_numeric_types['Numeric'].each do |char|
+    it "returns false for numeric character #{char.chr}  (#{char.ord})" do
+      char.should_not be_digit
+    end
+  end
+
+  derived_numeric_types['Decimal'].each do |char|
+    it "returns false for decimal character #{char.chr}  (#{char.ord})" do
+      char.should_not be_digit
+    end
+  end
+
+  it "returns false for non-digit characters" do
+    [0x0A2C, 0x0B1F, 0x0EDC, 0x1063, 
+     0x14D2, 0x1E00, 0x2425, 0x2565].each do |cp|
+      Char.new(cp).should_not be_digit
+     end
+  end
+end
+
