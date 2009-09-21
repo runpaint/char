@@ -199,6 +199,16 @@ class Char < String
     NumericType[ord] == 'Di'
   end
 
+  # Returns true if self is a decimal digit character.
+  #
+  # Note: We use the Unicode definition of 'decimal digit', which is not
+  # necessarily intuitive. Specifically, 'numerics' and 'digits' are _not_
+  # classed as decimal digits.
+  def decimal?
+    require_relative 'char/nt'
+    NumericType[ord] == 'De'
+  end
+
   def properties
     self.class.instance_methods(false).select{|m| m.to_s.end_with?('?')}.
                                        select{|m| send(m) rescue false }
