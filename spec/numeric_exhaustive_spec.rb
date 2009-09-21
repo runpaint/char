@@ -54,4 +54,10 @@ describe Char, :numeric_value do
         char.numeric_value.should be_a_kind_of(Rational)
       end
   end
+
+  it "returns NaN for characters without numeric values" do
+    [0x10189, 0x10832, 0x1D013, 0xE01DB].each do |codepoint|
+      Char.new(codepoint).numeric_value.should be_nan
+    end
+  end
 end

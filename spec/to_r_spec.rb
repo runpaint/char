@@ -24,7 +24,7 @@ describe Char, :to_r do
     Char.new(0x2473).to_r.should == Rational(20)
   end
 
-  it "returns the Float corresponding to a Nl character" do
+  it "returns the Rational corresponding to a Nl character" do
     Char.new(0x16EE).to_r.should == Rational(17) 
     Char.new(0x2164).to_r.should == Rational(5)
     Char.new(0x216C).to_r.should == Rational(50)
@@ -35,13 +35,13 @@ describe Char, :to_r do
     Char.new(0x2F890).to_r.should == Rational(9)
   end
 
-  it "converts fractions to Floats" do
+  it "converts fractions to Rationals" do
     Char.new(0x2154).to_r.should == Rational(2, 3)
     Char.new(0x00BD).to_r.should == Rational(1, 2)
     Char.new(0x0F32).to_r.should == Rational(17, 2)
   end
 
-  it "converts negative fractions to Floats" do
+  it "converts negative fractions to negative Rationals" do
     Char.new(0x0F33).to_r.should == Rational(-1, 2)
   end
 

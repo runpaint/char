@@ -164,19 +164,28 @@ class Char < String
 
   def numeric_value
     require_relative 'char/nv'
-    NumericValue[ord]
+    nv = NumericValue[ord]
+    nv.nil? ? 0/0.0 : nv
   end
 
   def to_r
-    numeric_value.to_r
+    begin
+      numeric_value.to_r
+    rescue FloatDomainError
+      0.to_r
+    end
   end
 
   def to_f
-    numeric_value.to_f
+    numeric_value.to_f.nan? ? 0.0 : numeric_value.to_f
   end
 
   def to_i
-    numeric_value.to_i
+    begin
+      numeric_value.to_i
+    rescue FloatDomainError
+      0
+    end
   end
 
   # Returns true if self is a numeric character.
