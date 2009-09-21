@@ -185,8 +185,7 @@ class Char < String
   # intuitive. Specifically, 'digits' and 'decimal digits' are _not_ classed
   # as numeric.
   def numeric?
-    require_relative 'char/nt'
-    NumericType[ord] == 'Nu'
+    numeric_type == :Nu
   end
 
   # Returns true if self is a digit character.
@@ -195,8 +194,7 @@ class Char < String
   # intuitive. Specifically, 'numerics' and 'decimal digits' are _not_ classed
   # as digits.
   def digit?
-    require_relative 'char/nt'
-    NumericType[ord] == 'Di'
+    numeric_type == :Di
   end
 
   # Returns true if self is a decimal digit character.
@@ -205,8 +203,13 @@ class Char < String
   # necessarily intuitive. Specifically, 'numerics' and 'digits' are _not_
   # classed as decimal digits.
   def decimal?
+    numeric_type == :De
+  end
+
+  def numeric_type
     require_relative 'char/nt'
-    NumericType[ord] == 'De'
+    nt = NumericType[ord]
+    nt.nil? ? :None : nt.to_sym
   end
 
   def properties
