@@ -17,8 +17,7 @@ IO.foreach(FILE) do |line|
        [parts.first.to_i(16)]
      end
   codepoints.each do |codepoint|                 
-    char = Char.new(codepoint) rescue nil
-    next unless char && char.exists?
+    char = Char.new(codepoint)
     # We only care about whether it's 'Numeric'; we ignore distinctions like
     # 'Digit' at this stage
     derived_numeric_types << char
@@ -34,6 +33,10 @@ describe Char, :numeric? do
     end
   end
 
-  it "understands numeric Han characters"
-  it "returns false for non-numeric characters"
+  it "returns false for non-numeric characters" do
+    [0x0A2C, 0x0B1F, 0x0EDC, 0x1063, 
+     0x14D2, 0x1E00, 0x2425, 0x2565].each do |cp|
+      Char.new(cp).should_not be_numeric
+     end
+  end
 end
