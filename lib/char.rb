@@ -183,7 +183,8 @@ class Char < String
     # FIXME: We special-case U+4E00 because it's mentioned in UnicodeData.txt 
     # yet not defined as Numeric there. We can remove this workaround when 
     # we parse Unihan.txt
-    ord == 19968 || property?(:N)
+    require_relative 'char/nt'
+    ord == 19968 || NumericType[ord] != 'None'
   end
 
   def properties
