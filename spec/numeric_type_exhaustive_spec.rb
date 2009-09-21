@@ -103,3 +103,30 @@ describe Char, :decimal? do
   end
 end
 
+describe Char, :numeric_type do
+  derived_numeric_types['Decimal'].each do |char|
+    it "returns :decimal for decimal digit character #{char.chr}  (#{char.ord})" do
+      char.numeric_type.should == :decimal
+    end
+  end
+
+  derived_numeric_types['Numeric'].each do |char|
+    it "returns :numeric for numeric character #{char.chr}  (#{char.ord})" do
+      char.numeric_type.should == :numeric
+    end
+  end
+
+  derived_numeric_types['Digit'].each do |char|
+    it "returns ;digit for digit character #{char.chr}  (#{char.ord})" do
+      char.numeric_type.should == :digit
+    end
+  end
+
+  it "returns :none for characters without a numeric type" do
+    [0x0A2C, 0x0B1F, 0x0EDC, 0x1063, 
+     0x14D2, 0x1E00, 0x2425, 0x2565].each do |cp|
+      Char.new(cp).numeric_type.should == :none
+     end
+  end
+end
+
