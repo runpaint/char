@@ -201,11 +201,11 @@ class Char < String
   end
 
   def name
-    has_data? ? unicode_data.name : ''
+    require_relative 'char/name'
+    Name[ord] or ''
   end
 
   def name?(str)
-    return false unless has_data?
     [str, name].map{|n| n.downcase.gsub(/[_ ]/,'')}.uniq.size == 1
   end
 
