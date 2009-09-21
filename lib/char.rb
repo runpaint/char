@@ -62,10 +62,6 @@ class Char < String
     property?(:Me)
   end
 
-  def digit?
-    property?(:Nd)
-  end
-
   def number_letter?
     property?(:Nl)
   end
