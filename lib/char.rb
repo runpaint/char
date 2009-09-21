@@ -167,11 +167,8 @@ class Char < String
   end
 
   def to_r
-    # FIXME: We special-case U+4E00 because it's mentioned in UnicodeData.txt 
-    # yet not defined as Numeric there. We can remove this workaround when 
-    # we parse Unihan.txt
-    return Rational(1.0) if ord == 19968
-    has_data? ? unicode_data.numeric_value : 0.to_r
+    require_relative 'char/nv'
+    NumericValue[ord].to_r
   end
 
   def to_f
