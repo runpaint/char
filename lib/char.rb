@@ -179,12 +179,14 @@ class Char < String
     to_r.to_i
   end
 
+  # Returns true if self is a numeric character.
+  #
+  # Note: We use the Unicode definition of 'numeric', which is not necessarily
+  # intuitive. Specifically, 'digits' and 'decimal digits' are _not_ classed
+  # as numeric.
   def numeric?
-    # FIXME: We special-case U+4E00 because it's mentioned in UnicodeData.txt 
-    # yet not defined as Numeric there. We can remove this workaround when 
-    # we parse Unihan.txt
     require_relative 'char/nt'
-    ord == 19968 || NumericType[ord] != 'None'
+    NumericType[ord] == 'Nu'
   end
 
   def properties

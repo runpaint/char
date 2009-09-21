@@ -1,17 +1,17 @@
 describe Char, :numeric? do
-  it "returns true if self is a character in the Nd category" do
-    Char.new(0x1D7CE).numeric?.should be_true
-    Char.new(0x1D7DA).numeric?.should be_true
+  it "returns true if self is a numeric character" do
+    Char.new(0xF9FD).numeric?.should be_true
+    Char.new(0x2092A).numeric?.should be_true
   end
 
-  it "returns true if self is a character in the Nl category" do
-    Char.new(0x16EE).numeric?.should be_true
-    Char.new(0x2160).numeric?.should be_true
+  it "returns false if self is a decimal character" do
+    Char.new(0x10FA8).numeric?.should be_false
+    Char.new(0x1810).numeric?.should be_false
   end
 
-  it "returns true if self is a character in the No category" do
-    Char.new(0x2466).numeric?.should be_true
-    Char.new(0x2480).numeric?.should be_true
+  it "returns false if self is a digit character" do
+    Char.new(0x00B9).numeric?.should be_false
+    Char.new(0x2780).numeric?.should be_false
   end
 
   it "returns false if self is a character in the Lu category" do
@@ -32,11 +32,6 @@ describe Char, :numeric? do
   it "returns false if self is a character in the Lm category" do
     Char.new(0x02B0).numeric?.should be_false
     Char.new(0x0640).numeric?.should be_false
-  end
-
-  it "returns false if self is a character in the Lo category" do
-    Char.new(0x0677).numeric?.should be_false
-    Char.new(0x2FA0A).numeric?.should be_false
   end
 
   it "returns false if self is a character in the Mn category" do

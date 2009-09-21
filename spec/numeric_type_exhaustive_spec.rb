@@ -1,13 +1,13 @@
 FILE = File.dirname(__FILE__) + '/../data/DerivedNumericType.txt'
 
-derived_numeric_types = []
+derived_numeric_types = {}
 
 IO.foreach(FILE) do |line|
   next if line.start_with? '#'
   next if line.start_with? ' '
   line.gsub!(/#.+/,'')
   line.chomp!
-  parts = line.split(/\s*;\s*/)
+  parts = line.split(/\s*;\s*/).map{|f| f.strip}
   next if parts.empty?
   codepoints = 
     if parts.first.include?('..')
@@ -18,18 +18,26 @@ IO.foreach(FILE) do |line|
      end
   codepoints.each do |codepoint|                 
     char = Char.new(codepoint)
-    # We only care about whether it's 'Numeric'; we ignore distinctions like
-    # 'Digit' at this stage
-    derived_numeric_types << char
+    (derived_numeric_types[parts[1]] ||= []) << char
   end
 end
 
-derived_numeric_types.uniq!
-
 describe Char, :numeric? do
-  derived_numeric_types.each do |char, data|
-    it "returns true for #{char.chr}  (#{char.ord})" do
+  derived_numeric_types['Numeric'].each do |char|
+    it "returns true for numeric character #{char.chr}  (#{char.ord})" do
       char.should be_numeric
+    end
+  end
+
+  derived_numeric_types['Digit'].each do |char|
+    it "returns false for digit character #{char.chr}  (#{char.ord})" do
+      char.should_not be_numeric
+    end
+  end
+
+  derived_numeric_types['Decimal'].each do |char|
+    it "returns false for decimal character #{char.chr}  (#{char.ord})" do
+      char.should_not be_numeric
     end
   end
 
@@ -40,3 +48,4 @@ describe Char, :numeric? do
      end
   end
 end
+
