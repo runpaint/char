@@ -162,17 +162,21 @@ class Char < String
     posix_class?(:print)
   end
 
-  def to_r
+  def numeric_value
     require_relative 'char/nv'
-    NumericValue[ord].to_r
+    NumericValue[ord]
+  end
+
+  def to_r
+    numeric_value.to_r
   end
 
   def to_f
-    to_r.to_f
+    numeric_value.to_f
   end
 
   def to_i
-    to_r.to_i
+    numeric_value.to_i
   end
 
   # Returns true if self is a numeric character.
