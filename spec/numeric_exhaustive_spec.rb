@@ -37,3 +37,21 @@ describe Char, :to_r do
     end
   end
 end
+
+describe Char, :numeric_value do
+  derived_numeric_values.
+    select{|char,data| data[2].to_r.denominator == 1 }.each do |char, data|
+      it "returns #{data[2].to_i} for #{char.chr}  (#{char.ord})" do
+        char.numeric_value.should == data[2].to_i
+        char.numeric_value.should be_a_kind_of(Integer)
+      end
+  end
+
+  derived_numeric_values.
+    reject{|char,data| data[2].to_r.denominator == 1 }.each do |char, data|
+      it "returns #{data[2].to_r} for #{char.chr}  (#{char.ord})" do
+        char.numeric_value.should == data[2].to_r
+        char.numeric_value.should be_a_kind_of(Rational)
+      end
+  end
+end
