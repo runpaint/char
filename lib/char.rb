@@ -2,7 +2,7 @@ class Char < String
 
   def initialize(char)
     char = char.chr('utf-8') if char.is_a?(Fixnum)
-    raise ArgumentError unless (char.is_a?(String) && char.size == 1)
+    raise ArgumentError, char unless (char.is_a?(String) && char.size == 1)
     super char
   end
 
@@ -224,6 +224,11 @@ class Char < String
       when 'Nu'   then :numeric
       else        raise "Unknown numeric type: #{nt.inspect}"
     end
+  end
+
+  def age
+    require_relative 'char/age'
+    Age[ord]
   end
 
   def properties
