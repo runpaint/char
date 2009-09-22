@@ -23,6 +23,10 @@ describe Char, :name? do
     Char.new(0x00A4).name?('URRENCY SIGN').should be_false
     Char.new(0x2a3c).name?('INTERIOR').should be_false
   end
+
+  it "works with CJK ideographs" do
+    Char.new(0xF906).name?('CJK COMPATIBILITY IDEOGRAPH-63750').should be_true
+  end
 end
 
 describe Char, :name do
@@ -35,5 +39,9 @@ describe Char, :name do
 
   it "returns the empty string for characters without names" do
     Char.new(0x31b8).name.should == ''
+  end
+
+  it "works with CJK ideographs" do
+    Char.new(0x20000).name.should == 'CJK UNIFIED IDEOGRAPH-131072'
   end
 end
