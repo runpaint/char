@@ -231,6 +231,33 @@ class Char < String
     Age[ord]
   end
 
+  def ccc
+    require_relative 'char/ccc'
+    case CanonicalCombiningClass[ord]
+      when 0   then :Not_Reordered
+      when 1   then :Overlay
+      when 7   then :Nukta
+      when 8   then :Kana_Voicing
+      when 9   then :Virama
+      when 200 then :Attached_Below_Left
+      when 202 then :Attached_Below
+      when 216 then :Attached_Above_Right
+      when 218 then :Below_Left
+      when 220 then :Below
+      when 222 then :Below_Right
+      when 224 then :Left
+      when 226 then :Right
+      when 228 then :Above_Left
+      when 230 then :Above
+      when 232 then :Above_Right
+      when 233 then :Double_Below
+      when 234 then :Double_Above
+      when 240 then :Iota_Subscript
+      else raise "Invalid canonical combining class"
+    end
+  end
+  alias :canonical_combining_class :ccc
+
   def properties
     self.class.instance_methods(false).select{|m| m.to_s.end_with?('?')}.
                                        select{|m| send(m) rescue false }
