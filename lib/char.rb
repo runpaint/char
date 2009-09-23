@@ -295,6 +295,12 @@ class Char < String
     (cp = BidiMirroringGlyph[ord]).nil? ? nil : self.class.new(cp)
   end
 
+  def decompose
+    require_relative 'char/dm'
+    codepoints = DecompositionMapping[ord]
+    codepoints.nil? ? [self] : codepoints.map{|cp| self.class.new(cp)}
+  end
+
   def properties
     self.class.instance_methods(false).select{|m| m.to_s.end_with?('?')}.
                                        select{|m| send(m) rescue false }
