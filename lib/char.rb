@@ -290,6 +290,11 @@ class Char < String
     BidiMirrored[ord]
   end
 
+  def mirror
+    require_relative 'char/bmg'
+    (cp = BidiMirroringGlyph[ord]).nil? ? nil : self.class.new(cp)
+  end
+
   def properties
     self.class.instance_methods(false).select{|m| m.to_s.end_with?('?')}.
                                        select{|m| send(m) rescue false }
