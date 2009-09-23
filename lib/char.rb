@@ -253,10 +253,37 @@ class Char < String
       when 233 then :Double_Below
       when 234 then :Double_Above
       when 240 then :Iota_Subscript
-      else raise "Invalid canonical combining class"
+      else     raise "Invalid canonical combining class"
     end
   end
   alias :canonical_combining_class :ccc
+
+  def bidi_class
+    require_relative 'char/bc'
+    case BidirectionalCategory[ord]
+      when 'AL'  then :Arabic_Letter
+      when 'AN'  then :Arabic_Number
+      when 'B'   then :Paragraph_Separator
+      when 'BN'  then :Boundary_Neutral
+      when 'CS'  then :Common_Separator
+      when 'EN'  then :European_Number
+      when 'ES'  then :European_Separator
+      when 'ET'  then :European_Terminator
+      when 'L'   then :Left_To_Right
+      when 'LRE' then :Left_To_Right_Embedding
+      when 'LRO' then :Left_To_Right_Override
+      when 'NSM' then :Nonspacing_Mark
+      when 'ON'  then :Other_Neutral
+      when 'PDF' then :Pop_Directional_Format
+      when 'R'   then :Right_To_Left
+      when 'RLE' then :Right_To_Left_Embedding
+      when 'RLO' then :Right_To_Left_Override
+      when 'S'   then :Segment_Separator
+      when 'WS'  then :White_Space
+      else       raise "Unknown bidi class"
+    end
+  end
+  alias :bidi_category :bidi_class
 
   def properties
     self.class.instance_methods(false).select{|m| m.to_s.end_with?('?')}.
