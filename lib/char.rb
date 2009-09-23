@@ -301,6 +301,11 @@ class Char < String
     codepoints.nil? ? [self] : codepoints.map{|cp| self.class.new(cp)}
   end
 
+  def bidi_control?
+    require_relative 'char/bidi-c'
+    BidiControl[ord]
+  end
+
   def properties
     self.class.instance_methods(false).select{|m| m.to_s.end_with?('?')}.
                                        select{|m| send(m) rescue false }
