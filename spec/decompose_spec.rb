@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Char, :decompose do
   it "returns the decomposition as an Array of Char objects" do
     Char.new(0x00B2).decompose.should == [Char.new(0x0032)]
