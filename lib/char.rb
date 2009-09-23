@@ -285,6 +285,11 @@ class Char < String
   end
   alias :bidi_category :bidi_class
 
+  def mirrored?
+    require_relative 'char/bidi-m'
+    BidiMirrored[ord]
+  end
+
   def properties
     self.class.instance_methods(false).select{|m| m.to_s.end_with?('?')}.
                                        select{|m| send(m) rescue false }
