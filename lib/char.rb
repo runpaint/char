@@ -118,10 +118,6 @@ class Char < String
     property?(:Z)
   end
 
-  def space?
-    property?(:Zs)
-  end
-
   def blank?
     posix_class?(:blank)
   end
