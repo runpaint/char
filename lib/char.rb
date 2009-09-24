@@ -322,6 +322,12 @@ class Char < String
     ExpandsOnNFD[ord]
   end
 
+  def ascii_hex_digit?
+    require_relative 'char/ahex'
+    ASCIIHexDigit[ord]
+  end
+  alias :ascii_hex? :ascii_hex_digit?
+
   def properties
     self.class.instance_methods(false).select{|m| m.to_s.end_with?('?')}.
                                        select{|m| send(m) rescue false }
