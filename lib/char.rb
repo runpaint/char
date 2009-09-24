@@ -312,6 +312,11 @@ class Char < String
     ExpandsOnNFC[ord]
   end
 
+  def expands_on_nfkc?
+    require_relative 'char/xo_nfkc'
+    ExpandsOnNFKC[ord]
+  end
+
   def expands_on_nfd?
     require_relative 'char/xo_nfd'
     ExpandsOnNFD[ord]
