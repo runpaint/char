@@ -312,6 +312,11 @@ class Char < String
     ExpandsOnNFC[ord]
   end
 
+  def expands_on_nfd?
+    require_relative 'char/xo_nfd'
+    ExpandsOnNFD[ord]
+  end
+
   def properties
     self.class.instance_methods(false).select{|m| m.to_s.end_with?('?')}.
                                        select{|m| send(m) rescue false }
