@@ -306,6 +306,11 @@ class Char < String
     BidiControl[ord]
   end
 
+  def whitespace?
+    require_relative 'char/wspace'
+    WhiteSpace[ord]
+  end
+
   def properties
     self.class.instance_methods(false).select{|m| m.to_s.end_with?('?')}.
                                        select{|m| send(m) rescue false }
