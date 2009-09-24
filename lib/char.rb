@@ -328,6 +328,11 @@ class Char < String
   end
   alias :ascii_hex? :ascii_hex_digit?
 
+  def alphabetic?
+    require_relative 'char/alpha'
+    Alphabetic[ord]
+  end
+
   def properties
     self.class.instance_methods(false).select{|m| m.to_s.end_with?('?')}.
                                        select{|m| send(m) rescue false }
