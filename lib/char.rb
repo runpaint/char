@@ -343,6 +343,11 @@ class Char < String
     XIDStart[ord]
   end
 
+  def xid_continue?
+    require_relative 'char/xidc'
+    XIDContinue[ord]
+  end
+
   def properties
     self.class.instance_methods(false).select{|m| m.to_s.end_with?('?')}.
                                        select{|m| send(m) rescue false }
